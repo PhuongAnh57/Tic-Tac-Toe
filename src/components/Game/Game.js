@@ -12,7 +12,7 @@ function Game() {
   const [history, setHistory] = useState([Array(9).fill(null)]);
   const [location, setLocation] = useState([{row: null, col: null}]);
   const [currentMove, setCurrentMove] = useState(0);
-  const [isCheck, setIsCheck] = useState("asc");
+  const [isCheck, setIsCheck] = useState(false);
   //   const currentSquares = history[history.length - 1];
   const currentSquares = history[currentMove];
 
@@ -85,7 +85,19 @@ function Game() {
       </div>
 
       <div className={cx("game-info")}>
-        <label htmlFor="choice">Tùy chọn: </label>
+        <div class="form-check form-switch">
+          <input 
+            class="form-check-input" 
+            type="checkbox" 
+            role="switch" 
+            id="flexSwitchCheckDefault" 
+            checked={isCheck}
+            onChange={() => setIsCheck(!isCheck)}
+          />
+          <label class="form-check-label" for="flexSwitchCheckDefault">Sắp xếp các bước giảm dần</label>
+        </div>
+
+        {/* <label htmlFor="choice">Tùy chọn: </label>
         <input
           checked={"asc" === isCheck}
           id="choice"
@@ -103,9 +115,10 @@ function Game() {
           value="desc"
           onChange={(e) => setIsCheck(e.target.value)}
         />
-        Giảm dần
+        Giảm dần */}
+
         <ol>
-          {isCheck === "desc"
+          {isCheck
             ? renderHistoryDesc(history.slice().reverse())
             : renderHistoryAsc(history)}
         </ol>
