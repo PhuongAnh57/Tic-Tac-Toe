@@ -29,43 +29,49 @@ function Game() {
     setXIsNext(move % 2 === 0);
   };
 
-//   const renderHistory = (array) => {
-//     return array.map((squares, move) => {
-//       let description = "";
-//       if (move > 0) {
-//         description = "Go to move #" + move;
-//       } else {
-//         description = "Go to game start";
-//       }
-//       return (
-//         <li key={move}>
-//           {currentMove === move ? (
-//             <span onClick={() => jumpTo(move)}>You are at move #{move}</span>
-//           ) : (
-//             <button onClick={() => jumpTo(move)}>{description}</button>
-//           )}
-//         </li>
-//       );
-//     });
-//   };
+  const renderHistoryDesc = (array) => {
+    return array.map((squares, move) => {
+      let description = "";
+      if (move === array.length - 1) {
+        description = "Go to game start";
+      } else {
+        description = "Go to move #" + (array.length - 1 - move);
+      }
+      return (
+        <li key={move}>
+          {currentMove === array.length - 1 - move ? (
+            <span onClick={() => jumpTo(array.length - 1 - move)}>
+              You are at move #{array.length - 1 - move}
+            </span>
+          ) : (
+            <button onClick={() => jumpTo(array.length - 1 - move)}>
+              {description}
+            </button>
+          )}
+        </li>
+      );
+    });
+  };
 
-  const moves = history.map((squares, move) => {
-    let description = "";
-    if (move > 0) {
-      description = "Go to move #" + move;
-    } else {
-      description = "Go to game start";
-    }
-    return (
-      <li key={move}>
-        {currentMove === move ? (
-          <span onClick={() => jumpTo(move)}>You are at move #{move}</span>
-        ) : (
-          <button onClick={() => jumpTo(move)}>{description}</button>
-        )}
-      </li>
-    );
-  });
+  const renderHistoryAsc = (array) => {
+    return array.map((squares, move) => {
+      let description = "";
+      if (move > 0) {
+        description = "Go to move #" + move;
+      } else {
+        description = "Go to game start";
+      }
+      return (
+        <li key={move}>
+          {currentMove === move ? (
+            <span onClick={() => jumpTo(move)}>You are at move #{move}</span>
+          ) : (
+            <button onClick={() => jumpTo(move)}>{description}</button>
+          )}
+        </li>
+      );
+    });
+  };
 
   return (
     <div className={cx("game")}>
@@ -93,9 +99,11 @@ function Game() {
           onChange={(e) => setIsCheck(e.target.value)}
         />
         Giảm dần
-
-        {/* <ol>{isCheck==='desc'?renderHistory(history.slice().reverse()):renderHistory(history)}</ol> */}
-        <ol>{moves}</ol>
+        <ol>
+          {isCheck === "desc"
+            ? renderHistoryDesc(history.slice().reverse())
+            : renderHistoryAsc(history)}
+        </ol>
       </div>
     </div>
   );
