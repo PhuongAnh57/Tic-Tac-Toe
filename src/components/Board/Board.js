@@ -27,7 +27,7 @@ function Board({ xIsNext, squares, onPlay }) {
         status = `Next player: ${xIsNext?'X':'O'}`;
     }    
 
-    const handleClick = (index) => {
+    const handleClick = (index, row, col) => {
         if(winner || squares[index]) return;
 
         const nextSquares = squares.slice();
@@ -40,7 +40,7 @@ function Board({ xIsNext, squares, onPlay }) {
 
         // setSquares(nextSquares);
         // setXIsNext(!xIsNext);
-        onPlay(nextSquares);
+        onPlay(nextSquares, row, col);
     }
 
     return (
@@ -70,7 +70,7 @@ function Board({ xIsNext, squares, onPlay }) {
                             key={j} 
                             value={squares[i*3+j]}
                             color={winner && positions.current.includes(i*3+j)}
-                            onSquareClick={() => handleClick(i*3+j)}/>
+                            onSquareClick={() => handleClick(i*3+j, i, j)}/>
                     ))}
                 </div>
             ))}

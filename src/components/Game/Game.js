@@ -10,18 +10,22 @@ const cx = classNames.bind(styles);
 function Game() {
   const [xIsNext, setXIsNext] = useState(true);
   const [history, setHistory] = useState([Array(9).fill(null)]);
+  const [location, setLocation] = useState([{row: null, col: null}]);
   const [currentMove, setCurrentMove] = useState(0);
   const [isCheck, setIsCheck] = useState("asc");
   //   const currentSquares = history[history.length - 1];
   const currentSquares = history[currentMove];
 
-  const handlePlay = (nextSquares) => {
+  const handlePlay = (nextSquares, row, col) => {
     // setHistory([...history, nextSquares]);
     const nextHistory = [...history.slice(0, currentMove + 1), nextSquares];
     setHistory(nextHistory);
     setCurrentMove(nextHistory.length - 1);
     //
     setXIsNext(!xIsNext);
+    
+    const nextLocation = [...location.slice(0, currentMove + 1), {row, col}];
+    setLocation(nextLocation);
   };
 
   const jumpTo = (move) => {
@@ -35,13 +39,13 @@ function Game() {
       if (move === array.length - 1) {
         description = "Go to game start";
       } else {
-        description = "Go to move #" + (array.length - 1 - move);
+        description = `Go to move #${array.length - 1 - move} (${location[array.length - 1 - move].row}, ${location[array.length - 1 - move].col})`;
       }
       return (
         <li key={move}>
-          {currentMove === array.length - 1 - move ? (
+          {(currentMove === array.length - 1 - move) && (currentMove!==0) ? (
             <span onClick={() => jumpTo(array.length - 1 - move)}>
-              You are at move #{array.length - 1 - move}
+              You are at move #{array.length - 1 - move} ({location[array.length - 1 - move].row}, {location[array.length - 1 - move].col})
             </span>
           ) : (
             <button onClick={() => jumpTo(array.length - 1 - move)}>
@@ -56,15 +60,16 @@ function Game() {
   const renderHistoryAsc = (array) => {
     return array.map((squares, move) => {
       let description = "";
+      // console.log(location);
       if (move > 0) {
-        description = "Go to move #" + move;
+        description = `Go to move #${move} (${location[move].row}, ${location[move].col})`;
       } else {
         description = "Go to game start";
       }
       return (
         <li key={move}>
-          {currentMove === move ? (
-            <span onClick={() => jumpTo(move)}>You are at move #{move}</span>
+          {currentMove === move && move!==0 ? (
+            <span onClick={() => jumpTo(move)}>You are at move #{move} ({location[move].row}, {location[move].col})</span>
           ) : (
             <button onClick={() => jumpTo(move)}>{description}</button>
           )}
