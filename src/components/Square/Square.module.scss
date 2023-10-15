@@ -1,0 +1,28 @@
+.square {
+  // positioning: position, z-index, top/right/bottom/left
+
+  // display + box model: display, overflow, box-sizing...
+  float: left;
+
+  width: 34px;
+  height: 34px;
+  margin-right: -1px;
+  margin-top: -1px;
+  padding: 0;
+  border: 1px solid #999;
+
+  // color: background, color text
+  background: #fff;
+
+  // text
+  font-size: 24px;
+  font-weight: bold;
+  line-height: 34px;
+  text-align: center; 
+
+  // other: animations + transition
+}
+
+.color {
+  background: yellow;
+}

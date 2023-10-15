@@ -1,0 +1,26 @@
+.game {
+  display: flex;
+  flex-direction: row;
+}
+
+.game-info {
+  margin-left: 48px;
+  margin-top: 20px;
+
+  input {
+    margin-left: 16px;
+  }
+  
+  ol {
+    display: flex;
+    flex-direction: column;
+
+    li + li {
+      margin-top: 4px;
+    }
+
+    button {
+      cursor: pointer;
+    }
+  }
+}
